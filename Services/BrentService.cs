@@ -30,7 +30,7 @@ public class BrentService: IBrentService
             json = File.ReadAllText("Data/brent-daily.json");
         }
 
-        pricesRecords = = JsonSerializer.Deserialize<List<BrentRecord>>(json);
+        pricesRecords = JsonSerializer.Deserialize<List<BrentRecord>>(json);
 
     }
 
