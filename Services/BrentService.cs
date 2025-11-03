@@ -33,4 +33,17 @@ public class BrentService: IBrentService
         pricesRecords = = JsonSerializer.Deserialize<List<BrentRecord>>(json);
 
     }
+
+    public Task<List<BrentRecord>> GetDailyPricesAsync(DateTime startDate, DateTime endDate)
+    {
+        var data = pricesRecords
+            .Where(r =>
+            {
+                if (!DateTime.TryParse(r.DateISO8601, out var d)) return false;
+                return d.Date >= startDate.Date && d.Date <= endDate.Date;
+            })
+            .ToList();
+
+        return Task.FromResult(data);
+    }
 }
