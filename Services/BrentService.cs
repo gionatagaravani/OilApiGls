@@ -7,7 +7,7 @@ public class BrentService: IBrentService
 {
     private readonly List<BrentRecord> pricesRecords;
 
-    public BrentService(Iconfiguration config)
+    public BrentService(IConfiguration config)
     {
         // read appsettings data url
         var dataUrl = config.GetValue<string>("DataUrl") ?? string.Empty;
