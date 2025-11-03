@@ -1,3 +1,5 @@
+namespace OilTrendApi.Models;
+
 public class JsonRpcResponse
 {
     public string Jsonrpc { get; set; } = "2.0";

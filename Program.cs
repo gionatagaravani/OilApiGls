@@ -1,9 +1,14 @@
+using OilTrendApi.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Register custom services
+builder.Services.AddScoped<IBrentService, BrentService>();
 
 var app = builder.Build();
 

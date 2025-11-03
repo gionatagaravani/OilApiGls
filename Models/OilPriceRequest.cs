@@ -1,3 +1,5 @@
+namespace OilTrendApi.Models;
+
 public class OilPriceRequest
 {
     public int Id { get; set; }

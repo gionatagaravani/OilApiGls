@@ -30,8 +30,12 @@ public class BrentService: IBrentService
             json = File.ReadAllText("Data/brent-daily.json");
         }
 
-        pricesRecords = JsonSerializer.Deserialize<List<BrentRecord>>(json);
-
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+        
+        pricesRecords = JsonSerializer.Deserialize<List<BrentRecord>>(json, options);
     }
 
     public Task<List<BrentRecord>> GetDailyPricesAsync(DateTime startDate, DateTime endDate)
@@ -39,7 +43,7 @@ public class BrentService: IBrentService
         var data = pricesRecords
             .Where(r =>
             {
-                if (!DateTime.TryParse(r.DateISO8601, out var d)) return false;
+                if (!DateTime.TryParse(r.Date, out var d)) return false;
                 return d.Date >= startDate.Date && d.Date <= endDate.Date;
             })
             .ToList();
