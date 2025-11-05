@@ -1,4 +1,3 @@
-using System.Text.Json;
 using OilTrendApi.Models;
 
 namespace OilTrendApi.Services;
@@ -7,35 +6,9 @@ public class BrentService: IBrentService
 {
     private readonly List<BrentRecord> pricesRecords;
 
-    public BrentService(IConfiguration config)
+    public BrentService(List<BrentRecord> data)
     {
-        // read appsettings data url
-        var dataUrl = config.GetValue<string>("DataUrl") ?? string.Empty;
-        
-        string json;
-
-        if (!string.IsNullOrEmpty(dataUrl)) {
-            try
-            {
-                using var client = new System.Net.Http.HttpClient();
-                json = client.GetStringAsync(dataUrl).GetAwaiter().GetResult();
-            }
-            catch
-            {
-                // get local data if url is invalid
-                json = File.ReadAllText("Data/brent-daily.json");
-            }
-        } else {
-            // get local data if url is null or empty
-            json = File.ReadAllText("Data/brent-daily.json");
-        }
-
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
-        
-        pricesRecords = JsonSerializer.Deserialize<List<BrentRecord>>(json, options);
+        pricesRecords = data;
     }
 
     public Task<List<BrentRecord>> GetDailyPricesAsync(DateTime startDate, DateTime endDate)
